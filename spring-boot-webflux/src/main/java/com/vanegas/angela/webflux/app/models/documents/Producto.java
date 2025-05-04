@@ -1,4 +1,6 @@
-package com.bolsadeideas.springboot.webflux.app.models.documents;
+package com.vanegas.angela.webflux.app.models.documents;
+
+import java.util.Date;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -19,18 +21,17 @@ public class Producto {
 	private Sucursal sucursal;
 	
 	private int cantidadSlock;
+	
+	private Date createAt;
+	
 
 	public Producto() {}
 
-	public Producto(String nombre, Double precio) {
-		this.nombre = nombre;
-		
-	}
-	
 	public Producto(String nombre, Sucursal sucursal, int cantidadSlock) {
 		this.nombre = nombre;
 		this.sucursal = sucursal;
 		this.cantidadSlock = cantidadSlock;
+		this.createAt = new Date();
 	}
 	
 	public String getId() {
@@ -46,13 +47,7 @@ public class Producto {
 		this.nombre = nombre;
 	}
 	
-	public Sucursal getCategoria() {
-		return sucursal;
-	}
-
-	public void setCategoria(Sucursal sucursal) {
-		this.sucursal = sucursal;
-	}
+	
 
 	public Sucursal getSucursal() {
 		return sucursal;
@@ -70,6 +65,13 @@ public class Producto {
 		this.cantidadSlock = cantidadSlock;
 	}
 
+	public Date getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
 	
 	
 	

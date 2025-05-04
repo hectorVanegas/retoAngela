@@ -1,14 +1,14 @@
-package com.bolsadeideas.springboot.webflux.app.models.services;
+package com.vanegas.angela.webflux.app.models.services;
+
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bolsadeideas.springboot.webflux.app.models.dao.SucursalDao;
-import com.bolsadeideas.springboot.webflux.app.models.dao.FranquiciaDao;
-import com.bolsadeideas.springboot.webflux.app.models.dao.ProductoDao;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Sucursal;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Franquicia;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Producto;
+import com.vanegas.angela.webflux.app.models.dao.FranquiciaDao;
+import com.vanegas.angela.webflux.app.models.dao.SucursalDao;
+import com.vanegas.angela.webflux.app.models.documents.Franquicia;
+import com.vanegas.angela.webflux.app.models.documents.Sucursal;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,9 +17,6 @@ import reactor.core.publisher.Mono;
 public class SucursallServiceImpl implements SucursalService{
 
 	@Autowired
-	private ProductoDao dao;
-	
-	@Autowired
 	private SucursalDao sucursalDao;
 	
 	@Autowired
@@ -27,6 +24,7 @@ public class SucursallServiceImpl implements SucursalService{
 
 	@Override
 	public Mono<Sucursal> findSucursalById(String id) {
+		
 		return sucursalDao.findById(id);
 	}
 
@@ -43,6 +41,14 @@ public class SucursallServiceImpl implements SucursalService{
 	public Flux<Sucursal> findAllSucursales() {
 		
 		return sucursalDao.findAll();
+	}
+
+	@Override
+	public Mono<Sucursal> saveSucursal(Sucursal sucursal) {
+		if(sucursal.getCreateAt() == null) {
+			sucursal.setCreateAt(new Date());
+		}
+		return sucursalDao.save(sucursal);
 	}
 
 	

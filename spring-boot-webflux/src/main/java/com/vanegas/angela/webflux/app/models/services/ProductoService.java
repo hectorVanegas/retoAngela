@@ -1,7 +1,6 @@
-package com.bolsadeideas.springboot.webflux.app.models.services;
+package com.vanegas.angela.webflux.app.models.services;
 
-import com.bolsadeideas.springboot.webflux.app.models.documents.Sucursal;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Producto;
+import com.vanegas.angela.webflux.app.models.documents.Producto;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,10 +19,12 @@ public interface ProductoService {
 	
 	public Mono<Void> delete(Producto producto);
 	
-	public Flux<Sucursal> findAllSucursal();
 	
-	public Mono<Sucursal> findSucursalById(String id);
 	
-	public Mono<Sucursal> saveSucursal(Sucursal sucursal);
+	public Mono<Producto> update(Producto producto, String id);
+    
+    public Mono<Void> delete(String id);
+    
+    
 
 }

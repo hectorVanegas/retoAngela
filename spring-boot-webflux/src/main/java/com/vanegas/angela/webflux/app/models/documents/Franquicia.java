@@ -1,4 +1,6 @@
-package com.bolsadeideas.springboot.webflux.app.models.documents;
+package com.vanegas.angela.webflux.app.models.documents;
+
+import java.util.Date;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -14,11 +16,14 @@ public class Franquicia {
 	
 	private String nombre;
 	
+	private Date createAt;
+	
 	public Franquicia() {
 	}
 
 	public Franquicia(String nombre) {
 		this.nombre = nombre;
+		
 	}
 
 	public String getId() {
@@ -35,6 +40,14 @@ public class Franquicia {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Date getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
 	}
 	
 

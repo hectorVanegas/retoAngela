@@ -17,6 +17,7 @@
 			<th>id</th>
 			<th>nombre</th>
 			<th>Sucursal</th>
+			
 			<th>editar</th>
 			<th>eliminar</th>
 		</tr>
@@ -27,6 +28,7 @@
 			<td th:text="${producto.nombre}"></td>
 			
 			<td th:text="${producto.categoria.nombre}"></td>
+			
 			<td><a th:href="@{/form/} + ${producto.id}">editar</a></td>
 			<td><a th:href="@{/eliminar/} + ${producto.id}" onclick="return confirm('estas seguro que desea eliminar?');">eliminar</a></td>
 		</tr>

@@ -9,7 +9,7 @@
 		<version>2.1.7.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bolsadeideas.springboot.webflux</groupId>
+	<groupId>com.vanegas.angela.webflux</groupId>
 	<artifactId>spring-boot-webflux</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-webflux</name>

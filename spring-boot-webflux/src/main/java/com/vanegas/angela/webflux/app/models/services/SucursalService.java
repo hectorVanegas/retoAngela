@@ -1,8 +1,7 @@
-package com.bolsadeideas.springboot.webflux.app.models.services;
+package com.vanegas.angela.webflux.app.models.services;
 
-import com.bolsadeideas.springboot.webflux.app.models.documents.Sucursal;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Franquicia;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Producto;
+import com.vanegas.angela.webflux.app.models.documents.Franquicia;
+import com.vanegas.angela.webflux.app.models.documents.Sucursal;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -16,5 +15,9 @@ public interface SucursalService {
 	public Mono<Franquicia> saveFranquicia(Franquicia sucursal);
 	
 	public Flux<Franquicia> findAllFranquicias();
+	
+	public Mono<Sucursal> saveSucursal(Sucursal sucursal);
+	
+	
 
 }

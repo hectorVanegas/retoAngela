@@ -1,6 +1,4 @@
-package com.bolsadeideas.springboot.webflux.app;
-
-import java.util.Date;
+package com.vanegas.angela.webflux.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 
-import com.bolsadeideas.springboot.webflux.app.models.documents.Sucursal;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Franquicia;
-import com.bolsadeideas.springboot.webflux.app.models.documents.Producto;
-import com.bolsadeideas.springboot.webflux.app.models.services.ProductoService;
-import com.bolsadeideas.springboot.webflux.app.models.services.SucursalService;
+import com.vanegas.angela.webflux.app.models.documents.Franquicia;
+import com.vanegas.angela.webflux.app.models.documents.Producto;
+import com.vanegas.angela.webflux.app.models.documents.Sucursal;
+import com.vanegas.angela.webflux.app.models.services.FranquiciaService;
+import com.vanegas.angela.webflux.app.models.services.ProductoService;
+import com.vanegas.angela.webflux.app.models.services.SucursalService;
 
 import reactor.core.publisher.Flux;
 
@@ -26,6 +25,10 @@ public class SpringBootWebfluxApplication implements CommandLineRunner{
 	
 	@Autowired
 	private SucursalService servicesucursal;
+	
+	
+	@Autowired
+	private FranquiciaService franquiciaService;
 	
 	
 	@Autowired
@@ -50,17 +53,20 @@ public class SpringBootWebfluxApplication implements CommandLineRunner{
 		Franquicia cuatro = new Franquicia("cuatro");
 		
 		
-		Sucursal pasoancho = new Sucursal("Pasoancho");
-		Sucursal Calima = new Sucursal("Calima");
-		Sucursal Juanchito = new Sucursal("Juanchito");
-		Sucursal Centro = new Sucursal("Centro");
+		Sucursal pasoancho = new Sucursal("Pasoancho",dos);
+		Sucursal Calima = new Sucursal("Calima",cuatro);
+		Sucursal Juanchito = new Sucursal("Juanchito",tres);
+		Sucursal Centro = new Sucursal("Centro",uno);
 		
 		
 		Flux.just(pasoancho, Calima, Juanchito, Centro)
-		.flatMap(service::saveSucursal)
+		.flatMap(servicesucursal::saveSucursal)
 		.doOnNext(c ->{
 			log.info("Sucursal creada: " + c.getNombre() + ", Id: " + c.getId());
 		}).thenMany(
+				
+				
+				
 				Flux.just(new Producto("TV Panasonic Pantalla LCD", pasoancho,4),
 						new Producto("Sony Camara HD Digital", pasoancho,10),
 						new Producto("Apple iPod", pasoancho,5),
@@ -79,7 +85,7 @@ public class SpringBootWebfluxApplication implements CommandLineRunner{
 		).subscribe(producto -> log.info("Insert: " + producto.getId() + " " + producto.getNombre()));
 		
 		Flux.just(uno, dos, tres, cuatro)
-		.flatMap(servicesucursal::saveFranquicia)
+		.flatMap(franquiciaService::saveFranquicia)
 		.doOnNext(c ->{
 			log.info("Sucursal creada: " + c.getNombre() + ", Id: " + c.getId());
 		}).thenMany(
@@ -92,9 +98,9 @@ public class SpringBootWebfluxApplication implements CommandLineRunner{
 						)
 				.flatMap(sucursal -> {
 					
-					return service.saveSucursal(sucursal);
+					return servicesucursal.saveSucursal(sucursal);
 					})
-		).subscribe(producto -> log.info("Insert: " + producto.getId() + " " + producto.getNombre()));
+		).subscribe(sucursal -> log.info("Insert: " + sucursal.getId() + " " + sucursal.getNombre()));
 		
 		
 	}

@@ -18,6 +18,7 @@ public interface SucursalService {
 	
 	public Mono<Sucursal> saveSucursal(Sucursal sucursal);
 	
+	public Mono<Sucursal> findByNombre(String nombre);
 	
 	
 	

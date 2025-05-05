@@ -53,6 +53,11 @@ public class SucursallServiceImpl implements SucursalService{
 		return sucursalDao.save(sucursal);
 	}
 
+	@Override
+	public Mono<Sucursal> findByNombre(String nombre) {
+		return sucursalDao.findByNombre(nombre);
+	}
+
 	
 	
 }

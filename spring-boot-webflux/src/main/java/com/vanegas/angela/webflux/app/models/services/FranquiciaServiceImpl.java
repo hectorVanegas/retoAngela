@@ -84,4 +84,10 @@ public class FranquiciaServiceImpl implements FranquiciaService{
 				.bodyToMono(Void.class);
 	}
 
+	@Override
+	public Mono<Franquicia> findByNombre(String nombre) {
+		return dao.findByNombre(nombre);
+		
+	}
+
 }

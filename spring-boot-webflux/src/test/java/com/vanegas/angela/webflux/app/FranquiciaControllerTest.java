@@ -15,6 +15,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import com.vanegas.angela.webflux.app.models.documents.Franquicia;
 import com.vanegas.angela.webflux.app.models.documents.Producto;
 import com.vanegas.angela.webflux.app.models.documents.Sucursal;
+import com.vanegas.angela.webflux.app.models.services.FranquiciaService;
 import com.vanegas.angela.webflux.app.models.services.ProductoService;
 
 import reactor.core.publisher.Mono;
@@ -22,83 +23,69 @@ import reactor.core.publisher.Mono;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class SpringBootWebfluxApplicationTests {
+public class FranquiciaControllerTest {
 
 	@Autowired
 	private WebTestClient client;
 	
 	@Autowired
-	private ProductoService service;
+	private FranquiciaService service;
 	
 	
 	@Test
-	public void verProducto() {
+	public void guardarfranquicia() {
 		
-		Producto prodcuto = service.findByNombre("Apple iPod").block();
+		Franquicia franquicia = service.findByNombre("uno").block();
 		
 		client.get()
-		.uri("/api/producto/{id}", Collections.singletonMap("id", prodcuto.getId()))
+		.uri("/api/franquicia/{id}", Collections.singletonMap("id", franquicia.getId()))
 		.accept(MediaType.APPLICATION_JSON_UTF8)
 		.exchange()
 		.expectStatus().isOk()
 		.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
 		.expectBody()
 		.jsonPath("$.id").isNotEmpty()
-		.jsonPath("$.nombre").isEqualTo("Apple iPod");
+		.jsonPath("$.nombre").isEqualTo("uno");
 	}
 	
 	@Test
-	public void listarProducto() {
+	public void listarFranquicia() {
 		
 		client.get()
-		.uri("/api/producto")
+		.uri("/api/franquicia")
 		.accept(MediaType.APPLICATION_JSON_UTF8)
 		.exchange()
 		.expectStatus().isOk()
 		.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-		.expectBodyList(Producto.class)
+		.expectBodyList(Franquicia.class)
 		.consumeWith(response -> {
-			List<Producto> productos = response.getResponseBody();
+			List<Franquicia> franquicia = response.getResponseBody();
 			
-			productos.forEach(p ->{
+			franquicia.forEach(p ->{
 				System.out.println(p.getNombre());
 				
 			});
-			Assertions.assertThat(productos.size()>0).isTrue();
+			Assertions.assertThat(franquicia.size()>0).isTrue();
 		});
 		
 		
 	}
 	
 	@Test
-	public void guardarProducto() {
-		Franquicia dos = new Franquicia("dos");
-		Sucursal pasoancho = new Sucursal("Pasoancho",dos);
-		Producto producto = new Producto("Sony Camara HD Digital", pasoancho,10);
+	public void guardarFranquicia() {
+		Franquicia franquicia = new Franquicia("dos");
 		
 		client.post()
-		.uri("/api/producto")
+		.uri("/api/franquicia")
 		.contentType(MediaType.APPLICATION_JSON_UTF8)
 		.accept(MediaType.APPLICATION_JSON_UTF8)
-		.body(Mono.just(producto), Producto.class)
+		.body(Mono.just(franquicia), Franquicia.class)
 		.exchange()
 		.expectStatus().isCreated()
 		.expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
 		.expectBody()
-		.jsonPath("$.nombre").isEqualTo("Sony Camara HD Digital")
-		.jsonPath("$.sucursal.nombre").isEqualTo("Pasoancho");
+		.jsonPath("$.nombre").isEqualTo("dos");
 		
-	}
-	@Test
-	public void eliminarProducto() {
-		Producto producto = service.findByNombre("Mica Cómoda 5 Cajones").block();
-		
-		client.delete()
-		.uri("/api/producto/{id}", Collections.singletonMap("id", producto.getId()))
-		.exchange()
-		.expectStatus().isNoContent()
-		.expectBody()
-		.isEmpty();
 	}
 	
 	

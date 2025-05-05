@@ -21,6 +21,8 @@ public class SucursallServiceImpl implements SucursalService{
 	
 	@Autowired
 	private FranquiciaDao franquiciaDao;
+	
+	
 
 	@Override
 	public Mono<Sucursal> findSucursalById(String id) {
@@ -51,5 +53,6 @@ public class SucursallServiceImpl implements SucursalService{
 		return sucursalDao.save(sucursal);
 	}
 
+	
 	
 }
